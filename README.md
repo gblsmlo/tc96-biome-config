@@ -1,13 +1,11 @@
 # @tc⚡96/biome-config
 A sharing configuration file in the settings for [Biome.js](https://biomejs.dev/guides/configure-biome/)
 
----
-
 ## Prerequisites
 Before installing `@tc96/biome-config`, ensure you have the following installed:
 
-1. **Node.js**: 
-2. **Biome.js**:
+1. **Node.js** 
+2. **Biome.js**
 
 ## 📦 Installation
 Using pnpm

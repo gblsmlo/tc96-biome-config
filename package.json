@@ -9,8 +9,8 @@
 		".": "./biome.json"
 	},
 	"scripts": {
-		"lint": "biome check --fix",
-		"lint:staged": "biome check --staged --fix",
+		"lint": "biome check --fix .",
+		"lint:staged": "biome check --staged --fix .",
 		"lint:ci": "biome ci",
 		"prepare": "husky"
 	},
