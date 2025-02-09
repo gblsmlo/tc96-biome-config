@@ -19,8 +19,7 @@
 			"dist",
 			"*.md",
 			"*.lock",
-			"*.log",
-			".github"
+			"*.log"
 		],
 		"attributePosition": "auto",
 		"indentStyle": "tab",
