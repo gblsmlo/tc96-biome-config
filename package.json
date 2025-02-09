@@ -1,0 +1,25 @@
+{
+	"name": "@tc96/biome-config",
+	"version": "0.0.3",
+	"type": "module",
+	"publishConfig": {
+		"access": "public"
+	},
+	"exports": {
+		".": "./biome.json"
+	},
+	"scripts": {
+		"lint": "biome check --fix",
+		"lint:staged": "biome check --staged --fix",
+		"lint:ci": "biome ci",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.7.1",
+		"@commitlint/config-conventional": "^19.7.1",
+		"husky": "^9.1.7"
+	},
+	"peerDependencies": {
+		"@biomejs/biome": "1.9.4"
+	}
+}
