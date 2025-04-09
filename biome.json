@@ -6,7 +6,14 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignore": ["node_modules", ".next", "dist", "public"]
+		"ignore": [
+			".next",
+			"coverage",
+			"dist",
+			"node_modules",
+			"generated",
+			"public"
+		]
 	},
 	"formatter": {
 		"enabled": true,
