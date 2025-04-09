@@ -1,5 +1,5 @@
 # @tc⚡96/biome-config
-A sharing configuration file in the settings for [Biome.js](https://biomejs.dev/guides/configure-biome/)
+Shared configuration file for projects [Biome.js](https://biomejs.dev/guides/configure-biome/)
 
 ## Prerequisites
 Before installing `@tc96/biome-config`, ensure you have the following installed:
@@ -25,10 +25,21 @@ yarn add -D @tc96/biome-config
 ```
 
 ## 🛠️ Usage
-After installing `@tc96/biome-config`, update your `biome.json` file to extend the configuration:
+After installing `@tc96/biome-config`, create a `biome.json` file in the project root and the config in `extends`, like this: 
 
+<project-root>/biome.json
 ```sh
 {
   "extends": ["@tc96/biome-config"]
+}
+```
+
+Add now, add scripts to your package.json if you haven't already:
+```json
+"scripts": {
+  "lint": "biome check",
+  "lint:fix": "biome check . --write",
+  "lint:staged": "biome check . --staged --write",
+  "lint:ci": "biome ci",
 }
 ```
