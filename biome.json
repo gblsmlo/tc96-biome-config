@@ -1,39 +1,18 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
 		"useIgnoreFile": false
 	},
-	"files": {
-		"ignore": [
-			".next",
-			"coverage",
-			"dist",
-			"node_modules",
-			"generated",
-			"public"
-		]
-	},
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
-		"ignore": [
-			"node_modules",
-			"package.json",
-			"package-lock.json",
-			"dist",
-			"*.lock",
-			"*.log"
-		],
 		"attributePosition": "auto",
 		"indentStyle": "tab",
 		"indentWidth": 2,
 		"lineWidth": 80,
 		"lineEnding": "lf"
-	},
-	"organizeImports": {
-		"enabled": true
 	},
 	"linter": {
 		"enabled": true,
@@ -45,6 +24,18 @@
 					"fix": "safe",
 					"options": {}
 				}
+			},
+			"style": {
+				"noParameterAssign": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useNumberNamespace": "error",
+				"noInferrableTypes": "error",
+				"noUselessElse": "error"
 			}
 		}
 	},
