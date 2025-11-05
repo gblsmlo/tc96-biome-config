@@ -9,6 +9,8 @@
 		".": "./biome.json"
 	},
 	"scripts": {
+		"test": "node --test tests/**/*.test.js",
+		"test:verbose": "node --test --test-reporter=spec tests/**/*.test.js",
 		"lint": "biome check . --fix",
 		"lint:staged": "biome check . --staged --fix",
 		"lint:ci": "biome ci",
