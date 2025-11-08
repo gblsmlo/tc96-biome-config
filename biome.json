@@ -1,43 +1,31 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [":NODE:", ":ALIAS:", ":PACKAGE:"]
+					}
+				},
+				"useSortedAttributes": "on",
+				"useSortedKeys": "on"
+			}
+		},
+		"enabled": true
+	},
+	"files": {
+		"includes": ["**/src/**/*", "!**/package.json"]
 	},
 	"formatter": {
+		"attributePosition": "auto",
 		"enabled": true,
 		"formatWithErrors": false,
-		"attributePosition": "auto",
 		"indentStyle": "tab",
 		"indentWidth": 2,
-		"lineWidth": 80,
-		"lineEnding": "lf"
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"nursery": {
-				"useSortedClasses": {
-					"level": "error",
-					"fix": "safe",
-					"options": {}
-				}
-			},
-			"style": {
-				"noParameterAssign": "error",
-				"useAsConstAssertion": "error",
-				"useDefaultParameterLast": "error",
-				"useEnumInitializers": "error",
-				"useSelfClosingElements": "error",
-				"useSingleVarDeclarator": "error",
-				"noUnusedTemplateLiteral": "error",
-				"useNumberNamespace": "error",
-				"noInferrableTypes": "error",
-				"noUselessElse": "error"
-			}
-		}
+		"lineEnding": "lf",
+		"lineWidth": 100
 	},
 	"javascript": {
 		"formatter": {
@@ -45,9 +33,42 @@
 			"bracketSameLine": false,
 			"bracketSpacing": true,
 			"quoteProperties": "asNeeded",
+			"quoteStyle": "single",
 			"semicolons": "asNeeded",
-			"trailingCommas": "all",
-			"quoteStyle": "single"
+			"trailingCommas": "all"
 		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"correctness": {
+				"noUnusedImports": "error"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"fix": "safe",
+					"level": "error",
+					"options": {}
+				}
+			},
+			"recommended": true,
+			"style": {
+				"noInferrableTypes": "error",
+				"noParameterAssign": "error",
+				"noUnusedTemplateLiteral": "error",
+				"noUselessElse": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error"
+			}
+		}
+	},
+	"vcs": {
+		"clientKind": "git",
+		"enabled": false,
+		"useIgnoreFile": false
 	}
 }
