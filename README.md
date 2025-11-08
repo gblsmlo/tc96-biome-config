@@ -1,89 +1,96 @@
+<div align="center">
+
 # @tc⚡96/biome-config
-Shared configuration file for projects [Biome.js](https://biomejs.dev/guides/configure-biome/)
 
-## Prerequisites
-Before installing `@tc96/biome-config`, ensure you have the following installed:
+Shared Biome configuration preset for JavaScript/TypeScript projects.
 
-1. **Node.js** 
-2. **Biome.js**
+[![npm version](https://img.shields.io/npm/v/@tc96/biome-config?logo=npm)](https://www.npmjs.com/package/@tc96/biome-config)
+[![npm downloads](https://img.shields.io/npm/dw/@tc96/biome-config)](https://www.npmjs.com/package/@tc96/biome-config)
 
-## 📦 Installation
-Using pnpm
+</div>
+
+## Overview
+
+This package provides an opinionated, reusable Biome config you can extend in your projects to get consistent formatting, linting, and Assist actions out of the box.
+
+Highlights:
+- Biome Formatter and Linter enabled with sensible defaults
+- Assist actions for organize imports, sorted JSX/HTML attributes, and sorted object keys
+- Works with VS Code (and any LSP-enabled editor)
+
+## Install
+
+Using pnpm:
 
 ```sh
-pnpm add -D @tc96/biome-config
+pnpm add -D @tc96/biome-config @biomejs/biome@2.3.4
 ```
 
-Using npm
+Using npm:
+
 ```sh
-npm install --save-dev @tc96/biome-config
+npm i -D @tc96/biome-config @biomejs/biome@2.3.4
 ```
 
-Using yarn
-```sh
-yarn add -D @tc96/biome-config
-```
+Peer dependency: `@biomejs/biome@2.3.4`.
 
-## 🛠️ Usage
-After installing `@tc96/biome-config`, create a `biome.json` file in the project root and the config in `extends`, like this: 
+## Quick start
 
-<project-root>/biome.json
-```sh
+Create `biome.json` in your project root and extend this preset:
+
+```json
 {
   "extends": ["@tc96/biome-config"]
 }
 ```
 
-Add now, add scripts to your package.json if you haven't already:
-```json
-"scripts": {
-  "lint": "biome check",
-  "lint:fix": "biome check . --write",
-  "lint:staged": "biome check . --staged --write",
-  "lint:ci": "biome ci",
-}
-```
-
-## Assist
-
-Biome Assist is the engine that performs automatic code transformations and code actions. It exposes code actions via LSP (VS Code, Zed, etc.) and can:
-
-- Apply all safe fixes ("fix all")
-- Run specific targeted actions (e.g. organize imports, sort JSX/HTML attributes, sort object keys)
-- Help maintain style and consistency without stacking multiple overlapping tools
-
-It works whenever the Biome LSP server is active in your editor. You decide which actions run automatically on save, or trigger them manually through the code actions menu.
-
-### VS Code configuration (workspace or user)
-
-Add the following to your project `.vscode/settings.json` (or your global user settings) to run actions on save:
+Recommended package.json scripts:
 
 ```jsonc
 {
-  "editor.codeActionsOnSave": {
-    // Apply all safe Biome fixes
-    "source.fixAll.biome": "explicit",
-    // Organize and group imports according to biome.json configuration
-    "source.organizeImports.biome": "explicit",
-    // Sort JSX/HTML attributes
-    "source.action.useSortedAttributes.biome": "explicit"
+  "scripts": {
+    "lint:check": "biome check .",              // Lint & diagnostics only
+    "lint:fix": "biome check --write .",        // Apply safe fixes (code + formatting)
+    "lint:format": "biome format --write .",    // Format only
+    "lint:staged": "biome check . --staged --fix", // Fix only staged files (pre-commit)
+    "lint:ci": "biome check --error-on-warnings ." // Fail CI on warnings
   }
 }
 ```
 
-Use "explicit" to avoid running potentially expensive actions implicitly. Add or remove actions as needed.
+If you use `lint-staged` + Husky, you can add (already in this repo):
 
-## JavaScript Assist Actions
+```jsonc
+{
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": ["biome check --write"],
+    "src/**/*.{json}": ["biome format --write"]
+  }
+}
+```
 
-Actions specific to JavaScript/TypeScript that improve ordering, cleanliness, and readability.
+## VS Code (on-save actions)
 
-### organizeImports
+Add to `.vscode/settings.json` (or User Settings) if you want actions to run on save:
 
-Groups, sorts, and normalizes import declarations. Your `biome.json` defines groups:
+```jsonc
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.action.useSortedAttributes.biome": "explicit"
+  }
+}
+``;
+
+## What’s included (preset behavior)
+
+The preset enables the following Assist actions and options (excerpt):
 
 ```jsonc
 {
   "assist": {
+    "enabled": true,
     "actions": {
       "source": {
         "organizeImports": {
@@ -91,51 +98,23 @@ Groups, sorts, and normalizes import declarations. Your `biome.json` defines gro
           "options": {
             "groups": [":NODE:", ":ALIAS:", ":PACKAGE:"]
           }
-        }
-      }
-    },
-    "enabled": true
-  }
-}
-```
-
-Groups used:
-- `:NODE:` native Node.js modules (`fs`, `path`, etc.)
-- `:ALIAS:` aliased paths (e.g. `@/utils/...`)
-- `:PACKAGE:` external packages from node_modules
-
-You can add other tokens (e.g. `:RELATIVE:` for relative imports). The order in the array defines the final block order.
-
-To enable automatic execution in VS Code we include `source.organizeImports.biome` in `editor.codeActionsOnSave`.
-
-### useSortedAttributes
-
-Sorts attributes in JSX/HTML elements for consistency (e.g. className, disabled, id, type, onClick). In the project it's enabled simply as:
-
-```jsonc
-{
-  "assist": {
-    "actions": {
-      "source": {
-        "useSortedAttributes": "on"
+        },
+        "useSortedAttributes": "on",
+        "useSortedKeys": "on"
       }
     }
   }
 }
 ```
 
-Transformation example:
+You can customize import groups in your app if needed (e.g. add `:RELATIVE:`). See Biome docs below.
 
-Before:
-```jsx
-<button onClick={handleClick} disabled={true} className="btn" id="submit" type="submit">Send</button>
-```
+## Links
 
-After:
-```jsx
-<button className="btn" disabled={true} id="submit" type="submit" onClick={handleClick}>Send</button>
-```
-
-### Other relevant actions
-
-- `useSortedKeys` (also enabled) sorts object keys to improve readability and produce stable diffs.
+- npm: https://www.npmjs.com/package/@tc96/biome-config
+- Docs: https://biomejs.dev/guides/configure-biome/
+- Assist: https://biomejs.dev/assist/
+- JS Assist actions: https://biomejs.dev/assist/javascript/actions/
+- organizeImports: https://biomejs.dev/assist/actions/organize-imports/
+- useSortedAttributes: https://biomejs.dev/assist/actions/use-sorted-attributes/
+- Repository: https://github.com/gblsmlo/tc96-biome-config

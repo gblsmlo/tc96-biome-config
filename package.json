@@ -11,19 +11,25 @@
 	"scripts": {
 		"test": "node --test tests/**/*.test.js",
 		"test:verbose": "node --test --test-reporter=spec tests/**/*.test.js",
-		"lint": "biome check . --fix",
+		"lint:check": "biome check .",
+		"lint:fix": "biome check --write .",
+		"lint:format": "biome format --write .",
 		"lint:staged": "biome check . --staged --fix",
-		"lint:ci": "biome ci",
+		"lint:ci": "biome check --error-on-warnings .",
 		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.4",
 		"@commitlint/cli": "^19.8.1",
 		"@commitlint/config-conventional": "^19.8.1",
+		"lint-staged": "^16.1.5",
 		"husky": "^9.1.7",
 		"shadcn": "^3.5.0"
 	},
 	"peerDependencies": {
 		"@biomejs/biome": "2.3.4"
+	},
+	"lint-staged": {
+		"*": "biome check --write ."
 	}
 }
