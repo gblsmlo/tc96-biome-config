@@ -9,6 +9,7 @@
 						"groups": [":NODE:", ":ALIAS:", ":PACKAGE:"]
 					}
 				},
+				"useSortedAttributes": "on",
 				"useSortedKeys": "on"
 			}
 		},
