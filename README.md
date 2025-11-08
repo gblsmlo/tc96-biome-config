@@ -43,3 +43,36 @@ Add now, add scripts to your package.json if you haven't already:
   "lint:ci": "biome ci",
 }
 ```
+
+## VS Code Integration
+
+You can configure your editor to automatically fix issues and apply specific actions on save.
+
+### Fix all issues on save
+
+To automatically fix all fixable issues on save, add the following to your VS Code `settings.json`. You can do this at the workspace level (`.vscode/settings.json`) or globally in your user settings.
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit"
+  }
+}
+```
+
+### Apply specific assist actions on save
+
+Biome has "assist actions" that can be configured to run on save. Each action has a specific code. For example, the `organizeImports` action has the code `source.organizeImports.biome`.
+
+You can add these codes to your `settings.json` to have them run on save.
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  }
+}
+```
+
+You can find the code for each action in the Biome documentation.
