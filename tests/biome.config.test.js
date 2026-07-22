@@ -84,6 +84,16 @@ describe('biome.json configuration', () => {
 		)
 	})
 
+	it('should allow unused generic parameters', () => {
+		biomeConfig = JSON.parse(readFileSync('biome.json', 'utf8'))
+
+		assert.equal(
+			biomeConfig.linter.rules.correctness.noUnusedVariables,
+			'off',
+			'noUnusedVariables should be disabled for declaration-merging generics',
+		)
+	})
+
 	it('should have nursery rules configured', () => {
 		biomeConfig = JSON.parse(readFileSync('biome.json', 'utf8'))
 		const { nursery } = biomeConfig.linter.rules
