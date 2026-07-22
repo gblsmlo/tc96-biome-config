@@ -1,23 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
-	"assist": {
-		"actions": {
-			"source": {
-				"organizeImports": {
-					"level": "on",
-					"options": {
-						"groups": [":NODE:", ":ALIAS:", ":PACKAGE:"]
-					}
-				},
-				"useSortedAttributes": "on",
-				"useSortedKeys": "on"
-			}
-		},
-		"enabled": true
-	},
-	"files": {
-		"includes": ["**/src/**/*", "!**/package.json"]
-	},
+	"$schema": "https://json.schemastore.org/biome",
 	"formatter": {
 		"attributePosition": "auto",
 		"enabled": true,
@@ -25,7 +7,7 @@
 		"indentStyle": "tab",
 		"indentWidth": 2,
 		"lineEnding": "lf",
-		"lineWidth": 100
+		"lineWidth": 80
 	},
 	"javascript": {
 		"formatter": {

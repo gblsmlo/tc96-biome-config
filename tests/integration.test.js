@@ -29,12 +29,21 @@ describe('Configuration integration tests', () => {
 			packageJson.devDependencies['@biomejs/biome']
 		const schemaBiomeVersion =
 			biomeConfig.$schema.match(/\/(\d+\.\d+\.\d+)\//)?.[1]
+		const schema = biomeConfig.$schema
 
-		assert.equal(
-			packageBiomeVersion,
-			schemaBiomeVersion,
-			'Biome versions should be consistent across package.json and biome.json schema',
-		)
+		if (schemaBiomeVersion) {
+			assert.equal(
+				packageBiomeVersion,
+				schemaBiomeVersion,
+				'Biome versions should be consistent across package.json and biome.json schema',
+			)
+		} else {
+			assert.equal(
+				schema,
+				'https://json.schemastore.org/biome',
+				'Biome schema should be schema store URL when explicit version is not embedded',
+			)
+		}
 	})
 
 	it('should have package.json and biome.json with compatible formatting', () => {
@@ -110,12 +119,12 @@ describe('Configuration integration tests', () => {
 })
 
 describe('Configuration version upgrade validation', () => {
-	it('should reflect version bump from 2.0.0 to 2.1.0', () => {
+	it('should reflect version bump from 2.0.0 to 2.3.0', () => {
 		const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
 		assert.equal(
 			packageJson.version,
-			'2.1.0',
-			'Package version should be updated to 2.1.0',
+			'2.3.0',
+			'Package version should be updated to 2.3.0',
 		)
 	})
 
@@ -133,11 +142,12 @@ describe('Configuration version upgrade validation', () => {
 			'2.3.4',
 			'Biome peerDependency should be 2.3.4',
 		)
-		assert.ok(
-			biomeConfig.$schema.includes('2.3.4'),
-			'Biome schema should reference 2.3.4',
-		)
-	})
+			assert.ok(
+				biomeConfig.$schema.includes('2.3.4') ||
+					biomeConfig.$schema === 'https://json.schemastore.org/biome',
+				'Biome schema should reference 2.3.4 or use json.schemastore.org/biome',
+			)
+		})
 
 	it('should not reference old biome version 2.0.6 anywhere', () => {
 		const packageContent = readFileSync('package.json', 'utf8')

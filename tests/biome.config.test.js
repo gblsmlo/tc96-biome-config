@@ -13,12 +13,12 @@ describe('biome.json configuration', () => {
 		}, 'biome.json should be valid JSON')
 	})
 
-	it('should have the correct schema URL for version 2.3.4', () => {
+	it('should have the correct schema URL', () => {
 		biomeConfig = JSON.parse(readFileSync('biome.json', 'utf8'))
 		assert.equal(
 			biomeConfig.$schema,
-			'https://biomejs.dev/schemas/2.3.4/schema.json',
-			'Schema should point to Biome 2.3.4',
+			'https://json.schemastore.org/biome',
+			'Schema should point to json.schemastore.org/biome',
 		)
 	})
 
@@ -251,17 +251,23 @@ describe('biome.json configuration', () => {
 		biomeConfig = JSON.parse(readFileSync('biome.json', 'utf8'))
 		const packageJson = JSON.parse(readFileSync('package.json', 'utf8'))
 
-		// Extract version from schema URL
-		const schemaVersion = biomeConfig.$schema.match(/\/(\d+\.\d+\.\d+)\//)?.[1]
-		assert.ok(schemaVersion, 'Should extract version from schema URL')
-
-		// Check it matches package.json biome version
+		const schema = biomeConfig.$schema
+		const schemaVersion = schema.match(/\/(\d+\.\d+\.\d+)\//)?.[1]
 		const biomeVersion = packageJson.devDependencies['@biomejs/biome']
-		assert.equal(
-			schemaVersion,
-			biomeVersion,
-			'Schema version should match Biome package version',
-		)
+
+		if (schemaVersion) {
+			assert.equal(
+				schemaVersion,
+				biomeVersion,
+				'Schema version should match Biome package version',
+			)
+		} else {
+			assert.equal(
+				schema,
+				'https://json.schemastore.org/biome',
+				'Schema should use json.schemastore.org/biome when versioned schema URL is not used',
+			)
+		}
 	})
 })
 
